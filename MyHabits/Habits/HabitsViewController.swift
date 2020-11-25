@@ -9,6 +9,8 @@ import UIKit
 
 class HabitsViewController: UIViewController {
     
+    //MARK:- Properties
+    
     private lazy var addHabit: UIBarButtonItem = {
         var button = UIBarButtonItem()
         button = .init(barButtonSystemItem: .add, target: self, action: #selector(tapAddHabitButton))
@@ -18,15 +20,8 @@ class HabitsViewController: UIViewController {
         return button
     }()
     
-    
-    @objc private func tapAddHabitButton() {
-        let habitViewController = UINavigationController(rootViewController: HabitViewController())
-        habitViewController.view.backgroundColor = .white
-        
-        present(habitViewController, animated: true) {
-            print("habit view controller presented succesfully")
-        }
-    }
+
+    // MARK:- LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +31,17 @@ class HabitsViewController: UIViewController {
         navigationItem.title = "Сегодня"
         navigationItem.rightBarButtonItem = addHabit
         
+    }
+    
+    //MARK:- Actions
+    
+    @objc private func tapAddHabitButton() {
+        let habitViewController = UINavigationController(rootViewController: HabitViewController())
+        habitViewController.view.backgroundColor = .white
+        
+        present(habitViewController, animated: true) {
+            print("habit view controller presented succesfully")
+        }
     }
     
 }

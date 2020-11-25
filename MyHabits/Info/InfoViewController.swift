@@ -9,6 +9,8 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
+    //MARK:- Properties
+    
     private lazy var infoHeaderLabel: UILabel = {
         let label = UILabel()
         label.text = "Привычка за 21 день"
@@ -54,6 +56,8 @@ class InfoViewController: UIViewController {
         return view
     }()
     
+    // MARK:- LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
@@ -61,6 +65,7 @@ class InfoViewController: UIViewController {
         title = "Информация"
     }
     
+    // MARK:- LayoutSettings
     
     private func setupLayout() {
         view.addSubview(scrollView)

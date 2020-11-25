@@ -15,8 +15,8 @@ class TabBarViewController: UITabBarController {
     
     let habitsBarItem: UITabBarItem = {
         let habitsBI = UITabBarItem()
-        habitsBI.image = UIImage(systemName: "rectangle.grid.1x2")
-        habitsBI.selectedImage = UIImage(systemName: "rectangle.grid.1x2.fill")
+        //habitsBI.image = UIImage(systemName: "rectangle.grid.1x2")
+        habitsBI.image = UIImage(systemName: "rectangle.grid.1x2.fill")
         habitsBI.title = "Привычки"
         habitsBI.standardAppearance?.selectionIndicatorTintColor = Colors.purple
         return habitsBI
@@ -24,8 +24,8 @@ class TabBarViewController: UITabBarController {
     
     let infoBarItem: UITabBarItem = {
         let infoBI = UITabBarItem()
-        infoBI.image = UIImage(systemName: "info.circle")
-        infoBI.selectedImage = UIImage(systemName: "info.circle.fill")
+        //infoBI.image = UIImage(systemName: "info.circle")
+        infoBI.image = UIImage(systemName: "info.circle.fill")
         infoBI.title = "Информация"
         infoBI.standardAppearance?.selectionIndicatorTintColor = Colors.purple
         return infoBI
