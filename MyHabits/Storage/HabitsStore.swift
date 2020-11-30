@@ -131,6 +131,7 @@ public final class HabitsStore {
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
+        formatter.locale = .init(identifier: "Russian")
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         formatter.doesRelativeDateFormatting = true

@@ -94,20 +94,18 @@ extension HabitDetailsViewController: UITableViewDataSource {
         
         for (index, _) in HabitsStore.shared.dates.enumerated() {
             let string = HabitsStore.shared.trackDateString(forIndex: index)
-            datesStringArray.append(string ?? "")
+            datesStringArray.append(string ?? "unknown")
         }
         
-        cell.textLabel?.text = datesStringArray[indexPath.row]
+        cell.textLabel?.text = datesStringArray.reversed()[indexPath.row]
         cell.textLabel?.textColor = .black
         cell.tintColor = Colors.purple
         cell.selectionStyle = .none
         
-        for date in HabitsStore.shared.dates {
-            if HabitsStore.shared.habit(habit, isTrackedIn: date) == true {
-                cell.accessoryType = .checkmark
-            } else {
-                cell.accessoryType = .none
-            }
+        if HabitsStore.shared.habit(habit, isTrackedIn: HabitsStore.shared.dates.reversed()[indexPath.row]) == true {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
         return cell
     }

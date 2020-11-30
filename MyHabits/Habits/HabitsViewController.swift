@@ -122,11 +122,12 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("index path: \(indexPath)")
-        let habit = HabitsStore.shared.habits[indexPath.item]
-        
-        let habitDetailsViewController = HabitDetailsViewController(habit: habit)
-        self.navigationController?.pushViewController(habitDetailsViewController, animated: true)
-        
+        if indexPath.section == 1 {
+            let habit = HabitsStore.shared.habits[indexPath.item]
+            
+            let habitDetailsViewController = HabitDetailsViewController(habit: habit)
+            self.navigationController?.pushViewController(habitDetailsViewController, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
