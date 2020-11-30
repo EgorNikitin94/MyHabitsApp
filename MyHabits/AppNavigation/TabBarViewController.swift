@@ -42,6 +42,7 @@ class TabBarViewController: UITabBarController {
         let tabBarList = [habitsViewController, infoViewController]
         
         viewControllers = tabBarList
+        self.tabBar.tintColor = Colors.purple
     }
 
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HabitViewController: UIViewController {
+final class HabitViewController: UIViewController {
     
     // MARK:- Properties
     
@@ -17,7 +17,7 @@ class HabitViewController: UIViewController {
         button.tintColor = Colors.purple
         button.title = "Отмена"
         button.style = .done
-        button.action = #selector(backHabitButtonTaped)
+        button.action = #selector(backHabitButtonTapped)
         return button
     }()
     
@@ -42,6 +42,7 @@ class HabitViewController: UIViewController {
     private lazy var habitTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
+        textField.textColor = .systemBlue
         textField.toAutoLayout()
         return textField
     }()
@@ -83,7 +84,9 @@ class HabitViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         label.textColor = Colors.purple
-        label.text?.uppercased()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        label.text = formatter.string(from: timePicker.date)
         label.toAutoLayout()
         return label
     }()
@@ -148,8 +151,7 @@ class HabitViewController: UIViewController {
             
             timePicker.topAnchor.constraint(equalTo: subsidiaryLabel.bottomAnchor, constant: 15),
             timePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            timePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            timePicker.heightAnchor.constraint(equalToConstant: 162)
+            timePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             
         ]
         NSLayoutConstraint.activate(constraints)
@@ -158,10 +160,10 @@ class HabitViewController: UIViewController {
     
     
     // MARK:- Actions
-    @objc func backHabitButtonTaped() {
+    @objc func backHabitButtonTapped() {
         dismiss(animated: true) {
-            print("backButton was taped")
-            print("habits view controller presented succesfully")
+            print("backButton was tapped")
+            print("habits view controller presented successfully")
         }
     }
     
@@ -176,8 +178,9 @@ class HabitViewController: UIViewController {
         store.habits.append(newHabit)
         
         dismiss(animated: true){
-            print("safeButton was taped")
-            print("habits view controller presented succesfully")
+            print("safeButton was tapped")
+            print("habits view controller presented successfully")
+            
         }
     }
     
@@ -189,3 +192,4 @@ class HabitViewController: UIViewController {
     
     
 }
+
