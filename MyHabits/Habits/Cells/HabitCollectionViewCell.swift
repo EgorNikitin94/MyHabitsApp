@@ -66,17 +66,14 @@ final class HabitCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        setupLayout()
-        contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 8
-        
         roundButton.layer.cornerRadius = roundButton.frame.height / 2
-        
+        contentView.layer.cornerRadius = 8
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupLayout()
+        contentView.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {

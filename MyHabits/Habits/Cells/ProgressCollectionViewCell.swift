@@ -15,7 +15,7 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
         return String(describing: ProgressCollectionViewCell.self)
     }
     
-    /// Пробывал сделать обновление линии прогресса без помощи метода updateProgressData(), а при помощи делегирования, но данный код не работает
+    /// Пробывал сделать обновление линии прогресса без помощи метода updateProgressData(), а при помощи колбэка, но данный код не работает
     
     //    private lazy var habitCollectionViewCell: HabitCollectionViewCell = {
     //        let cell = HabitCollectionViewCell()

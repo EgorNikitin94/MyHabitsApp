@@ -101,7 +101,7 @@ extension HabitsViewController: UICollectionViewDataSource {
         } else {
             let cellTwo: HabitCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.reuseID, for: indexPath) as! HabitCollectionViewCell
             
-            cellTwo.isOnRoundButton = { [weak self]  in
+            cellTwo.isOnRoundButton = {
                 collectionView.reloadData()
             }
             cellTwo.habit = HabitsStore.shared.habits[indexPath.item]
