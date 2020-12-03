@@ -17,7 +17,7 @@ final class HabitCollectionViewCell: UICollectionViewCell {
     
     var isOnRoundButton: (() -> Void)?
     
-    var habit: Habit? {
+    internal var habit: Habit? {
         didSet {
             nameOfHabitLabel.text = habit?.name
             nameOfHabitLabel.textColor = habit?.color
@@ -122,24 +122,24 @@ final class HabitCollectionViewCell: UICollectionViewCell {
             print("AlreadyTaken")
             return
         }
-        roundButton.backgroundColor = habit?.color
-        roundButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        roundButton.tintColor = .white
+        settingsForRoundButton()
         HabitsStore.shared.track(habit!)
         isOnRoundButton?()
     }
     
-    func drawRoundButton() {
+    private func drawRoundButton() {
         
         if habit?.isAlreadyTakenToday == true && roundButton.layer.borderColor == habit?.color.cgColor {
-            roundButton.backgroundColor = habit?.color
-            roundButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-            roundButton.tintColor = .white
+            settingsForRoundButton()
         } else {
             roundButton.backgroundColor = .white
         }
     }
     
-    
+    private func settingsForRoundButton() {
+        roundButton.backgroundColor = habit?.color
+        roundButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        roundButton.tintColor = .white
+    }
     
 }

@@ -10,12 +10,12 @@ import UIKit
 class TabBarViewController: UITabBarController {
     
     // MARK: Properties
+    
     let habitsViewController = UINavigationController(rootViewController: HabitsViewController())
     let infoViewController = UINavigationController(rootViewController: InfoViewController())
     
     let habitsBarItem: UITabBarItem = {
         let habitsBI = UITabBarItem()
-        //habitsBI.image = UIImage(systemName: "rectangle.grid.1x2")
         habitsBI.image = UIImage(systemName: "rectangle.grid.1x2.fill")
         habitsBI.title = "Привычки"
         habitsBI.standardAppearance?.selectionIndicatorTintColor = Colors.purple
@@ -24,7 +24,6 @@ class TabBarViewController: UITabBarController {
     
     let infoBarItem: UITabBarItem = {
         let infoBI = UITabBarItem()
-        //infoBI.image = UIImage(systemName: "info.circle")
         infoBI.image = UIImage(systemName: "info.circle.fill")
         infoBI.title = "Информация"
         infoBI.standardAppearance?.selectionIndicatorTintColor = Colors.purple
@@ -44,5 +43,5 @@ class TabBarViewController: UITabBarController {
         viewControllers = tabBarList
         self.tabBar.tintColor = Colors.purple
     }
-
+    
 }

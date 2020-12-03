@@ -42,6 +42,10 @@ public final class Habit: Codable {
         "Каждый день в " + dateFormatter.string(from: date)
     }
     
+    public var dateStringShort: String {
+        dateFormatter.string(from: date)
+    }
+    
     /// Показывает, была ли сегодня добавлена привычка.
     public var isAlreadyTakenToday: Bool {
         guard let lastTrackDate = trackDates.last else {

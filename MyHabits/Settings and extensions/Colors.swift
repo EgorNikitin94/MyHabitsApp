@@ -17,4 +17,5 @@ struct Colors {
     static let green: UIColor = #colorLiteral(red: 0.1137254902, green: 0.7019607843, blue: 0.1333333333, alpha: 1)
     static let darkPurple: UIColor = #colorLiteral(red: 0.3843137255, green: 0.2117647059, blue: 1, alpha: 1)
     static let orange: UIColor = #colorLiteral(red: 1, green: 0.6235294118, blue: 0.3098039216, alpha: 1)
+
 }

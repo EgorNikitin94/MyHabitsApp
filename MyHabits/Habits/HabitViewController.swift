@@ -11,6 +11,14 @@ final class HabitViewController: UIViewController {
     
     // MARK:- Properties
     
+    weak var delegate: HabitDetailsViewControllerDelegate?
+    
+    weak var delegateMainVC: HabitsViewControllerDelegate?
+    
+    internal var habit: Habit?
+    
+    private let isEditingController: Bool
+    
     private lazy var backButton: UIBarButtonItem = {
         var button = UIBarButtonItem()
         button.target = self
@@ -27,7 +35,7 @@ final class HabitViewController: UIViewController {
         button.tintColor = Colors.purple
         button.title = "Сохранить"
         button.style = .plain
-        button.action = #selector(saveHabitButtonTaped)
+        button.action = #selector(saveHabitButtonTapped)
         return button
     }()
     
@@ -100,12 +108,34 @@ final class HabitViewController: UIViewController {
         return time
     }()
     
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Удалить привычку", for: .normal)
+        button.setTitleColor(.systemRed, for: .normal)
+        button.isHidden = true
+        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        button.toAutoLayout()
+        return button
+    }()
+    
     // MARK:- Lifecycle
+    
+    init(isEditingController: Bool) {
+        self.isEditingController = isEditingController
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        navigationItem.largeTitleDisplayMode = .never
         addTapGestureToHideKeyboard()
         setupLayout()
-        navigationItem.title = "Cоздать"
+        controllerSettings()
         navigationItem.rightBarButtonItem = saveButton
         navigationItem.leftBarButtonItem = backButton
     }
@@ -122,6 +152,7 @@ final class HabitViewController: UIViewController {
         view.addSubview(subsidiaryLabel)
         view.addSubview(showTimeLabel)
         view.addSubview(timePicker)
+        view.addSubview(deleteButton)
         
         let constraints = [
             nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
@@ -151,45 +182,96 @@ final class HabitViewController: UIViewController {
             
             timePicker.topAnchor.constraint(equalTo: subsidiaryLabel.bottomAnchor, constant: 15),
             timePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            timePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            timePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
+            deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
         
     }
     
-    
     // MARK:- Actions
-    @objc func backHabitButtonTapped() {
+    
+    @objc private func backHabitButtonTapped() {
         dismiss(animated: true) {
             print("backButton was tapped")
             print("habits view controller presented successfully")
         }
     }
     
-    @objc func saveHabitButtonTaped() {
+    @objc private func saveHabitButtonTapped() {
         guard let habitText = habitTextField.text else {return}
         guard let color = setColorWell.selectedColor else {return}
-        
-        let newHabit = Habit(name: habitText,
-                             date: timePicker.date,
-                             color: color)
-        let store = HabitsStore.shared
-        store.habits.append(newHabit)
-        
+        if isEditingController == false {
+            
+            let newHabit = Habit(name: habitText,
+                                 date: timePicker.date,
+                                 color: color)
+            let store = HabitsStore.shared
+            store.habits.append(newHabit)
+            delegateMainVC?.updateCollectionView()
+        } else {
+            habit?.name = habitText
+            habit?.color = color
+            habit?.date = timePicker.date
+            HabitsStore.shared.save()
+            delegate?.getTitleName(name: habit?.name ?? "unknown")
+        }
         dismiss(animated: true){
             print("safeButton was tapped")
-            print("habits view controller presented successfully")
+            self.isEditingController == false ? print("habits view controller presented successfully") : print("habit details view controller presented successfully")
             
         }
     }
     
-    @objc func getFromTimePicker() {
+    @objc private func getFromTimePicker() {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
         showTimeLabel.text = formatter.string(from: timePicker.date)
     }
     
+    @objc private func deleteButtonTapped() {
+        let alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку: '\(habit?.name ?? "unknown")'?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) {_ in
+            print("cancel button was tapped")
+        }
+        alertController.addAction(cancelAction)
+        let deleteAction = UIAlertAction(title: "Удалить", style: .default) {_ in
+            print("delete button was tapped")
+            for (index, item) in HabitsStore.shared.habits.enumerated() {
+                if item == self.habit {
+                    HabitsStore.shared.habits.remove(at: index)
+                    print("\(item.name) removed at index \(index)")
+                    
+                }
+            }
+            self.dismiss(animated: true) {
+                self.delegate?.close()
+            }
+            
+        }
+        alertController.addAction(deleteAction)
+        present(alertController, animated: true) {
+            print("Alert controller presented successfully")
+        }
+    }
+    
+    private func controllerSettings() {
+        if isEditingController == false {
+            navigationItem.title = "Cоздать"
+        } else {
+            guard let habit = habit else {return}
+            deleteButton.isHidden = false
+            navigationItem.title = "Править"
+            habitTextField.text = habit.name
+            setColorWell.selectedColor = habit.color
+            timePicker.date = habit.date
+            showTimeLabel.text = habit.dateStringShort
+        }
+    }
     
 }
+
 

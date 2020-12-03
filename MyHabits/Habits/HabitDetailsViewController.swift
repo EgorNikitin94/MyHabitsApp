@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol HabitDetailsViewControllerDelegate: class {
+    func getTitleName(name: String)
+    func close()
+}
+
 final class HabitDetailsViewController: UIViewController {
     
     //MARK:- Properties
     
-    var habit: Habit
+    internal var habit: Habit?
     
     private let cellID = "cellID"
     
@@ -33,29 +38,18 @@ final class HabitDetailsViewController: UIViewController {
         return table
     }()
     
-    
     // MARK:- LifeCycle
-    
-    init(habit: Habit) {
-        self.habit = habit
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
         view.backgroundColor = Colors.white
-        navigationItem.title = habit.name
+        navigationItem.title = habit!.name
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = editButton
         navigationController?.navigationBar.tintColor = Colors.purple
         
     }
-    
     
     // MARK:- LayoutSettings
     
@@ -71,12 +65,15 @@ final class HabitDetailsViewController: UIViewController {
         NSLayoutConstraint.activate(constratints)
     }
     
-    
-    
-    
-    @objc func editButtonTapped() {
+    @objc private func editButtonTapped() {
         print("Edit button tapped")
-        
+        let habitViewController = HabitViewController(isEditingController: true)
+        habitViewController.delegate = self
+        habitViewController.habit = habit
+        let habitNavigationViewController = UINavigationController(rootViewController: habitViewController)
+        present(habitNavigationViewController, animated: true) {
+            print("habit view controller presented successfully")
+        }
     }
 }
 
@@ -102,7 +99,7 @@ extension HabitDetailsViewController: UITableViewDataSource {
         cell.tintColor = Colors.purple
         cell.selectionStyle = .none
         
-        if HabitsStore.shared.habit(habit, isTrackedIn: HabitsStore.shared.dates.reversed()[indexPath.row]) == true {
+        if HabitsStore.shared.habit(habit!, isTrackedIn: HabitsStore.shared.dates.reversed()[indexPath.row]) == true {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -117,4 +114,15 @@ extension HabitDetailsViewController: UITableViewDataSource {
     }
     
     
+}
+
+
+extension HabitDetailsViewController: HabitDetailsViewControllerDelegate {
+    func close() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func getTitleName(name: String) {
+        navigationItem.title = name
+    }
 }

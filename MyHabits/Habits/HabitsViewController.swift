@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol HabitsViewControllerDelegate: class {
+    func updateCollectionView()
+}
+
 final class HabitsViewController: UIViewController {
     
     //MARK:- Properties
@@ -43,7 +47,6 @@ final class HabitsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Сегодня"
         navigationItem.rightBarButtonItem = addHabit
-        navigationItem.largeTitleDisplayMode = .always
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,10 +73,10 @@ final class HabitsViewController: UIViewController {
     //MARK:- Actions
     
     @objc private func tapAddHabitButton() {
-        let habitViewController = UINavigationController(rootViewController: HabitViewController())
-        habitViewController.view.backgroundColor = .white
-        
-        present(habitViewController, animated: true) {
+        let habitViewController = HabitViewController(isEditingController: false)
+        habitViewController.delegateMainVC = self
+        let habitNavigationViewController = UINavigationController(rootViewController: habitViewController)
+        present(habitNavigationViewController, animated: true) {
             print("habit view controller presented successfully")
         }
     }
@@ -124,8 +127,8 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         print("index path: \(indexPath)")
         if indexPath.section == 1 {
             let habit = HabitsStore.shared.habits[indexPath.item]
-            
-            let habitDetailsViewController = HabitDetailsViewController(habit: habit)
+            let habitDetailsViewController = HabitDetailsViewController()
+            habitDetailsViewController.habit = habit
             self.navigationController?.pushViewController(habitDetailsViewController, animated: true)
         }
     }
@@ -149,4 +152,10 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: top, left: baseLeftRightInset, bottom: bottom, right: baseLeftRightInset)
     }
     
+}
+
+extension HabitsViewController: HabitsViewControllerDelegate {
+    func updateCollectionView() {
+        collectionView.reloadData()
+    }
 }

@@ -15,17 +15,6 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
         return String(describing: ProgressCollectionViewCell.self)
     }
     
-    /// Пробывал сделать обновление линии прогресса без помощи метода updateProgressData(), а при помощи колбэка, но данный код не работает
-    
-    //    private lazy var habitCollectionViewCell: HabitCollectionViewCell = {
-    //        let cell = HabitCollectionViewCell()
-    //        cell.isOnRoundButton = { [weak self] in
-    //            self?.progressLine.setProgress(HabitsStore.shared.todayProgress, animated: true)
-    //            self?.progressLabel.text = String(Int((self?.progressLine.progress)! * 100)) + "%"
-    //        }
-    //        return cell
-    //    }()
-    
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.text = "Всё получится!"
