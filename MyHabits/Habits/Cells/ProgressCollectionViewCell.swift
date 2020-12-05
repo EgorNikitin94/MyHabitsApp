@@ -96,7 +96,7 @@ final class ProgressCollectionViewCell: UICollectionViewCell {
     
     // MARK:- Actions
     
-    internal func updateProgressData() {
+    func updateProgressData() {
         progressLine.setProgress(HabitsStore.shared.todayProgress, animated: true)
         progressLabel.text = String(Int(progressLine.progress * 100)) + "%"
     }

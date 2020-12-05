@@ -16,7 +16,7 @@ final class HabitDetailsViewController: UIViewController {
     
     //MARK:- Properties
     
-    internal var habit: Habit?
+    var habit: Habit?
     
     private let cellID = "cellID"
     
@@ -77,7 +77,7 @@ final class HabitDetailsViewController: UIViewController {
     }
 }
 
-
+// MARK: - Extensions -
 
 extension HabitDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,7 +115,6 @@ extension HabitDetailsViewController: UITableViewDataSource {
     
     
 }
-
 
 extension HabitDetailsViewController: HabitDetailsViewControllerDelegate {
     func close() {

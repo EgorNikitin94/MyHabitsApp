@@ -15,7 +15,7 @@ final class HabitViewController: UIViewController {
     
     weak var delegateMainVC: HabitsViewControllerDelegate?
     
-    internal var habit: Habit?
+    var habit: Habit?
     
     private let isEditingController: Bool
     
@@ -219,7 +219,7 @@ final class HabitViewController: UIViewController {
             delegate?.getTitleName(name: habit?.name ?? "unknown")
         }
         dismiss(animated: true){
-            print("safeButton was tapped")
+            print("saveButton was tapped")
             self.isEditingController == false ? print("habits view controller presented successfully") : print("habit details view controller presented successfully")
             
         }
@@ -271,7 +271,6 @@ final class HabitViewController: UIViewController {
             showTimeLabel.text = habit.dateStringShort
         }
     }
-    
 }
 
 

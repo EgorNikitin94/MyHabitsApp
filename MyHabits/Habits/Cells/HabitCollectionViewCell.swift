@@ -17,7 +17,7 @@ final class HabitCollectionViewCell: UICollectionViewCell {
     
     var isOnRoundButton: (() -> Void)?
     
-    internal var habit: Habit? {
+    var habit: Habit? {
         didSet {
             nameOfHabitLabel.text = habit?.name
             nameOfHabitLabel.textColor = habit?.color
@@ -66,7 +66,7 @@ final class HabitCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        roundButton.layer.cornerRadius = roundButton.frame.height / 2
+        roundButton.layer.cornerRadius = 18 //roundButton.frame.height / 2
         contentView.layer.cornerRadius = 8
     }
     
