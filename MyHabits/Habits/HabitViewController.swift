@@ -51,6 +51,7 @@ final class HabitViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         textField.textColor = .systemBlue
+        textField.delegate = self
         textField.toAutoLayout()
         return textField
     }()
@@ -274,3 +275,10 @@ final class HabitViewController: UIViewController {
 }
 
 
+extension HabitViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.habitTextField.resignFirstResponder()
+        
+        return true
+    }
+}
